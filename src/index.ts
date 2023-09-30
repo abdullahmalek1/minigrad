@@ -1,40 +1,44 @@
-import { IValue, IValueArgs, Operation } from './models'
+import { ValueType, ValueArgs, MathOperation } from './models'
 
-export class Value implements IValue {
+export class Value {
     data: number
-    prev: Set<IValue>
-    op: Operation
+    prev: Set<Value>
+    op?: MathOperation
     private _label: string
 
-    constructor(valueArgs: IValueArgs) {
+    constructor(valueArgs: ValueArgs) {
         const { data, children, op, label } = valueArgs
         this.data = data
         this.prev = children ? new Set(children) : new Set()
-        this.op = op ?? Operation.NONE
+        this.op = op
         this._label = label ?? ''
     }
 
-    add(other: IValue): IValue {
-        let output = new Value({ data: this.data + other.data, children: [this, other], op: Operation.ADD})
+    add(other: ValueType): Value {
+        other = other instanceof Value ? other : new Value({ data: other as number })
+        let output = new Value({ data: this.data + other.data, children: [this, other], op: '+'})
         return output
     }
 
-    sub(other: IValue): IValue {
-        let output = new Value({ data: this.data - other.data, children: [this, other], op: Operation.SUBTRACT})
+    sub(other: ValueType): Value {
+        other = other instanceof Value ? other : new Value({ data: other as number })
+        let output = new Value({ data: this.data - other.data, children: [this, other], op: '-'})
         return output
     }
 
-    mul(other: IValue): IValue {
-        let output = new Value({ data: this.data * other.data, children: [this, other], op: Operation.MULTIPLY})
+    mul(other: ValueType): Value {
+        other = other instanceof Value ? other : new Value({ data: other as number })
+        let output = new Value({ data: this.data * other.data, children: [this, other], op: '*'})
         return output
     }
 
-    pow(other: IValue): IValue {
-        let output = new Value({ data: this.data ** other.data, children: [this, other], op: Operation.POW})
+    pow(other: ValueType): Value {
+        other = other instanceof Value ? other : new Value({ data: other as number })
+        let output = new Value({ data: this.data ** other.data, children: [this, other], op: '**'})
         return output
     }
 
-    setLabel(name: string): IValue {
+    setLabel(name: string): Value {
         this._label = name
         return this
     }

@@ -61,3 +61,35 @@ test('add, subtract, multiply and power', () => {
 
     expect(f.data).toEqual(15625)
 })
+
+test('add a Value to a number', () => {
+    const a = new Value({ data: 2.0 })
+    const b = 1
+    const c = a.add(b)
+
+    expect(c.data).toEqual(3)
+})
+
+test('add a number to Value', () => {
+    const a = new Value({ data: 2.0 })
+    const b = 1
+    const c = a.add(b)
+
+    expect(c.data).toEqual(3)
+})
+
+test('subtract a number from Value', () => {
+    const a = new Value({ data: 2.0 })
+    const b = 1
+    const c = a.sub(b)
+
+    expect(c.data).toEqual(1)
+})
+
+test('multiply Value by a number', () => {
+    const a = new Value({ data: 2.0 })
+    const b = 5
+    const c = a.mul(b)
+
+    expect(c.data).toEqual(10)
+})
