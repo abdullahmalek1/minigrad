@@ -1,12 +1,12 @@
-import { Operation, ValueArgs } from './models'
+import { IValue, IValueArgs, Operation } from './models'
 
-export class Value {
+export class Value implements IValue {
     data: number
-    prev: Set<Value>
+    prev: Set<IValue>
     op: Operation
-    _label: string
+    private _label: string
 
-    constructor(valueArgs: ValueArgs) {
+    constructor(valueArgs: IValueArgs) {
         const { data, children, op, label } = valueArgs
         this.data = data
         this.prev = children ? new Set(children) : new Set()
@@ -14,19 +14,43 @@ export class Value {
         this._label = label ?? ''
     }
 
-    add(other: Value): Value {
-        let self = this
-        let output = new Value({ data: self.data + other.data, children: [self, other], op: Operation.ADD})
+    add(other: IValue): IValue {
+        let output = new Value({ data: this.data + other.data, children: [this, other], op: Operation.ADD})
         return output
     }
 
-    mul(other: Value): Value {
+    sub(other: IValue): IValue {
+        let output = new Value({ data: this.data - other.data, children: [this, other], op: Operation.SUBTRACT})
+        return output
+    }
+
+    mul(other: IValue): IValue {
         let output = new Value({ data: this.data * other.data, children: [this, other], op: Operation.MULTIPLY})
         return output
     }
 
-    label(name: string): Value {
+    pow(other: IValue): IValue {
+        let output = new Value({ data: this.data ** other.data, children: [this, other], op: Operation.POW})
+        return output
+    }
+
+    setLabel(name: string): IValue {
         this._label = name
         return this
     }
+
+    getLabel(): string {
+        return this._label
+    }
 }
+
+// let a = new Value({ data: 2.0, label: 'a'})
+// let b = new Value({ data: -3, label: 'b'})
+// let c = new Value({ data: 10.0, label: 'c'})
+
+// let e = a.mul(b).setLabel('e')
+// let d = e.add(c).setLabel('d')
+// let f = new Value({ data: -2.0, label: 'f'})
+// let L = d.mul(f).setLabel('L')
+
+// console.log(L)

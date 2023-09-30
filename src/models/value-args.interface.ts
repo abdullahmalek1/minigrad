@@ -1,9 +1,8 @@
-import { Operation } from './index'
-import { Value } from '..'
+import { IValue, Operation } from './index'
 
-export interface ValueArgs {
+export interface IValueArgs {
     data: number
-    children?: [Value, Value]
+    children?: [IValue, IValue]
     op?: Operation,
     label?: string
 }

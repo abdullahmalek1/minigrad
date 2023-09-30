@@ -1,29 +1,63 @@
 import { Value } from "../src";
 
 test('add', () => {
-    const a = new Value({ data: 2.0, label: 'a'})
-    const b = new Value({ data: -3.0, label: 'b'})
+    const a = new Value({ data: 2.0 })
+    const b = new Value({ data: 3.0 })
     const c = a.add(b)
+
+    expect(c.data).toEqual(5)
+})
+
+test('sub', () => {
+    const b = new Value({ data: 3.0 })
+    const a = new Value({ data: 2.0 })
+    const c = a.sub(b)
 
     expect(c.data).toEqual(-1)
 })
 
 test('mul', () => {
-    const a = new Value({ data: 2.0, label: 'a'})
-    const b = new Value({ data: -3.0, label: 'b'})
+    const a = new Value({ data: 2.0 })
+    const b = new Value({ data: 3.0 })
     const c = a.mul(b)
 
-    expect(c.data).toEqual(-6)
+    expect(c.data).toEqual(6)
 })
 
-test('mul and add', () => {
-    const a = new Value({ data: 2.0, label: 'a'})
-    const b = new Value({ data: -3.0, label: 'b'})
-    const c = new Value({ data: 10.0, label: 'c'})
+test('pow', () => {
+    const a = new Value({ data: 2.0 })
+    const b = new Value({ data: 3.0 })
+    const c = a.pow(b)
 
-    const d = a.mul(b)
-    const e = d.add(c)
-    
+    expect(c.data).toEqual(8)
+})
 
-    expect(e.data).toEqual(4)
+test('add and subtract', () => {
+    const a = new Value({ data: 2.0 })
+    const b = new Value({ data: 3.0 })
+    const c = new Value({ data: 4.0 })
+    const d = a.add(b).sub(c)
+
+    expect(d.data).toEqual(1)
+})
+
+test('add, subtract and multiply', () => {
+    const a = new Value({ data: 2.0 })
+    const b = new Value({ data: 3.0 })
+    const c = new Value({ data: 4.0 })
+    const d = new Value({ data: 5.0})
+    const e = a.add(b).sub(c).mul(d)
+
+    expect(e.data).toEqual(5)
+})
+
+test('add, subtract, multiply and power', () => {
+    const a = new Value({ data: 2.0 })
+    const b = new Value({ data: 3.0 })
+    const c = new Value({ data: 4.0 })
+    const d = new Value({ data: 5.0})
+    const e = new Value({ data: 6.0})
+    const f = a.add(b).sub(c).mul(d).pow(e)
+
+    expect(f.data).toEqual(15625)
 })
