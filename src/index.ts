@@ -43,14 +43,3 @@ export class Value implements IValue {
         return this._label
     }
 }
-
-// let a = new Value({ data: 2.0, label: 'a'})
-// let b = new Value({ data: -3, label: 'b'})
-// let c = new Value({ data: 10.0, label: 'c'})
-
-// let e = a.mul(b).setLabel('e')
-// let d = e.add(c).setLabel('d')
-// let f = new Value({ data: -2.0, label: 'f'})
-// let L = d.mul(f).setLabel('L')
-
-// console.log(L)
