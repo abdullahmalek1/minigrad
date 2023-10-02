@@ -2,16 +2,16 @@ import { ValueType, ValueArgs, MathOperation } from './models'
 
 export class Value {
     data: number
-    prev: Set<Value>
-    op?: MathOperation
-    private _label: string
+    private _prev: Set<Value>
+    private _op?: MathOperation
+    label: string
 
     constructor(valueArgs: ValueArgs) {
         const { data, children, op, label } = valueArgs
         this.data = data
-        this.prev = children ? new Set(children) : new Set()
-        this.op = op
-        this._label = label ?? ''
+        this._prev = children ? new Set(children) : new Set()
+        this._op = op
+        this.label = label ?? ''
     }
 
     add(other: ValueType): Value {
@@ -36,14 +36,5 @@ export class Value {
         other = other instanceof Value ? other : new Value({ data: other as number })
         let output = new Value({ data: this.data ** other.data, children: [this, other], op: '**'})
         return output
-    }
-
-    setLabel(name: string): Value {
-        this._label = name
-        return this
-    }
-
-    getLabel(): string {
-        return this._label
     }
 }
