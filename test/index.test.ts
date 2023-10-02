@@ -93,3 +93,9 @@ test('multiply Value by a number', () => {
 
     expect(c.data).toEqual(10)
 })
+
+test('grad should be initialised to zero', () => {
+    const a = new Value({ data: 2.0})
+
+    expect(a.grad).toEqual(0)
+})
